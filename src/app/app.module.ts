@@ -9,6 +9,7 @@ import { FirstComponent } from './first/first.component';
 import { SecondComponent } from './second/second.component';
 import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
+import { LogService } from './services/log.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ChildbComponent } from './second/childb/childb.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

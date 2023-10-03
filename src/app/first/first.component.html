@@ -1,4 +1,10 @@
 <p>first works!</p>
-<li><a routerLink="second">Second</a></li>
-<button  [routerLink]="['']">Home page</button>
 
+<div *ngIf="id">
+    <p>id is {{id}}</p>
+</div>
+
+<ul class="no-bullets">
+    <li><a routerLink="/second">Second</a></li>
+</ul>
+<button [routerLink]="['']">Home page</button>

@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+body {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+ul.no-bullets {
+    list-style-type: none;
+    /* Remove bullets */
+    padding: 0;
+    /* Remove padding */
+    margin: 0;
+    /* Remove margins */
+}
