@@ -9,7 +9,9 @@ import { FirstComponent } from './first/first.component';
 import { SecondComponent } from './second/second.component';
 import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
-import { LogService } from './services/log.service';
+import { LogService } from './services/logging/log.service';
+import { LogpublishersService } from './services/logging/logpublishers.service';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import { LogService } from './services/log.service';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [LogService],
+  providers: [LogService, LogpublishersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

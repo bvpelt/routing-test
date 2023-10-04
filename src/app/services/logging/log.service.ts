@@ -1,11 +1,18 @@
 
 import { LogEntry, LogLevel } from './logentry.class';
+import { Injectable } from '@angular/core';
+import { LogpublishersService } from './logpublishers.service';
+import { LogPublisher } from './logpublisher.class';
 
+@Injectable()
 export class LogService {
   level: LogLevel = LogLevel.All;
   logWithDate: boolean = true;
+  publishers: LogPublisher[] = [];
 
-  constructor() { }
+  constructor(private publishersService: LogpublishersService) {
+    this.publishers = this.publishersService.publishers;
+  }
 
 
   debug(msg: string, ...optionalParams: any[]) {
@@ -32,7 +39,7 @@ export class LogService {
     this.writeToLog(msg, LogLevel.All, optionalParams);
   }
 
-  
+
 
   private writeToLog(msg: string, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
@@ -41,7 +48,10 @@ export class LogService {
       entry.level = level;
       entry.extraInfo = params;
       entry.logWithDate = this.logWithDate;
-      console.log(entry.buildLogString());
+      //console.log(entry.buildLogString());
+      for (let logger of this.publishers) {
+        logger.log(entry).subscribe(response => console.log(response));
+      }
     }
   }
 
