@@ -29,17 +29,7 @@ export class LogLocalStorage extends LogPublisher {
             values.push(entry);
             // Store array into local storage
             localStorage.setItem(this.location, JSON.stringify(values));
-
-            /*
-            values = JSON.parse(localStorage.getItem(this.location)) || [];
-
-            // Add new log entry to array
-            values.push(entry);
-
-            // Store array into local storage
-            localStorage.setItem(this.location, JSON.stringify(values));
-            */
-
+        
             // Set return value
             ret = true;
         } catch (ex) {
