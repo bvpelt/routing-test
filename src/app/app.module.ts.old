@@ -11,7 +11,6 @@ import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
 import { LogService } from './services/logging/log.service';
 import { LogpublishersService } from './services/logging/logpublishers.service';
-import { PermlinkComponent } from './permlink/permlink.component';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -23,8 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     FirstComponent,
     SecondComponent,
     ChildaComponent,
-    ChildbComponent,
-    PermlinkComponent
+    ChildbComponent
   
   ],
   imports: [
