@@ -11,6 +11,7 @@ import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
 import { LogService } from './services/logging/log.service';
 import { LogpublishersService } from './services/logging/logpublishers.service';
+import { PermlinkComponent } from './permlink/permlink.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { LogpublishersService } from './services/logging/logpublishers.service';
     FirstComponent,
     SecondComponent,
     ChildaComponent,
-    ChildbComponent
+    ChildbComponent,
+    PermlinkComponent
   ],
   imports: [
     BrowserModule,

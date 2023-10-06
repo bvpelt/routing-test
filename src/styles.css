@@ -7,7 +7,26 @@ body {
 }
 
 button {
-    margin-top: 10px;
+    /* margin-top: 10px; */
+
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: hsl(106, 85%, 26%);
+    margin: .5em .5em .5em 0em;
+    padding: .5em;
+    border-radius: 4px;
+    display: flex;
+    align-items: stretch;
+    height: 2em;
+    color: white;
+}
+
+button:hover {
+    color: white;
+    background-color: rgb(14, 206, 24);
+    left: .1em;
 }
 
 ul.no-bullets {
