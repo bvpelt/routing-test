@@ -14,7 +14,6 @@ export class LogService {
     this.publishers = this.publishersService.publishers;
   }
 
-
   debug(msg: string, ...optionalParams: any[]) {
     this.writeToLog(msg, LogLevel.Debug, optionalParams);
   }
@@ -50,7 +49,11 @@ export class LogService {
       entry.logWithDate = this.logWithDate;
       //console.log(entry.buildLogString());
       for (let logger of this.publishers) {
-        logger.log(entry).subscribe(response => console.log(response));
+        logger.log(entry).subscribe(response => {
+          if (response.result != true) {
+            console.log(response)
+          }
+        });
       }
     }
   }

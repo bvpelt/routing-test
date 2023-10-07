@@ -1,6 +1,7 @@
 import { LogPublisher } from "./logpublisher.class";
 import { Observable, of } from "rxjs";
 import { LogEntry } from "./logentry.class";
+import { LogEntryResult } from "./logentryresult.class";
 
 
 export class LogLocalStorage extends LogPublisher {
@@ -13,9 +14,12 @@ export class LogLocalStorage extends LogPublisher {
     }
 
     // Append log entry to local storage
-    log(entry: LogEntry): Observable<boolean> {
-        let ret: boolean = false;
+    log(entry: LogEntry): Observable<LogEntryResult> {
+        
         let values: LogEntry[];
+
+        let logResult: LogEntryResult = new LogEntryResult();
+        logResult.result = false;
 
         try {
             // Get previous values from local storage
@@ -31,13 +35,14 @@ export class LogLocalStorage extends LogPublisher {
             localStorage.setItem(this.location, JSON.stringify(values));
         
             // Set return value
-            ret = true;
+            logResult.logentry = entry;
+            logResult.result = true;            
         } catch (ex) {
             // Display error in console
             console.log(ex);
         }
 
-        return of(ret);
+        return of(logResult);
     }
 
     // Clear all log entries from local storage
