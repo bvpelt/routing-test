@@ -1,12 +1,11 @@
 import { LogEntryResult } from './logentryresult.class';
 
 //import { Http, Response, Headers, RequestOptions } from '@angular/common/http';
-import { Observable, of } from "rxjs";
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 import { LogEntry } from "./logentry.class";
 import { LogPublisher } from "./logpublisher.class";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
 export class LogWebApi extends LogPublisher {
 
@@ -26,20 +25,50 @@ export class LogWebApi extends LogPublisher {
         let logResult: LogEntryResult = new LogEntryResult();
         logResult.result = false;
 
+        /*
         this.http.post<LogEntryResult>(this.location, entry, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'json' })
             .pipe(
-                tap(LogEntryResult => console.log(JSON.stringify(LogEntryResult))),
-                catchError(this.handleError('postChannelResult', LogEntryResult)),
-             
-            );
+                tap(LogEntryResult => console.log(JSON.stringify(LogEntryResult)),
+                    catchError(this.handleError('postChannelResult', LogEntryResult))),
 
-        return of(logResult);
+            );
+*/
+        return this.postLogEntry(entry);
+
+        //return of(logResult);
     }
 
     // Clear all log entries from local storage
     clear(): Observable<boolean> {
         // TODO: Call Web API to clear all values
         return of(true);
+    }
+
+    private postLogEntry(entry: LogEntry): Observable<LogEntryResult> {
+
+        return this.http.post<LogEntryResult>(this.location, entry)
+            .pipe(
+                tap({
+                    next: () => {
+                        // 200
+                    },
+                    error: () => {
+                        console.log(JSON.stringify(LogEntryResult))
+                    },
+                }),
+                catchError(
+                    (error: HttpErrorResponse): Observable<any> => {
+                        // we expect 404, it's not a failure for us.
+                        if (error.status === 404) {
+                            return of(null); // or any other stream like of('') etc.
+                        }
+
+                        // other errors we don't know how to handle and throw them further.
+                        return throwError(() => error);
+                    },
+                )
+            );
+ 
     }
 
     /**

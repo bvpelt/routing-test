@@ -50,8 +50,8 @@ export class LogService {
       //console.log(entry.buildLogString());
       for (let logger of this.publishers) {
         logger.log(entry).subscribe(response => {
-          if (response.result != true) {
-            console.log(response)
+          if (response.result !== true) {
+            console.log(JSON.stringify(response))
           }
         });
       }
