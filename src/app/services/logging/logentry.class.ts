@@ -27,12 +27,14 @@ export class LogEntry {
   
       ret += "Type: " + LogLevel[this.level];
       ret += " - Message: " + this.message;
+
       if (this.extraInfo.length) {
         ret += " - Extra Info: " + this.formatParams(this.extraInfo);
       }
   
       return ret;
     }
+
   
     private formatParams(params: any[]): string {
       let ret: string = params.join(",");

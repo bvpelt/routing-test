@@ -20,7 +20,16 @@ const routes: Routes = [
       { path: 'child-b', component: ChildbComponent },
     ]
   },
+  /*
   { path: 'permlink/:location', component: PermlinkComponent },
+  { path: 'permlink', component: PermlinkComponent },
+  */
+
+  {
+    path: 'permlink/:location', component: PermlinkComponent, children: [
+      { path: '**', component: PermlinkComponent },
+    ]
+  },
   { path: 'permlink', component: PermlinkComponent },
   { path: '**', component: NotfoundComponent },
 ];
@@ -29,8 +38,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: [
-    provideRouter(routes, withComponentInputBinding(), withRouterConfig({paramsInheritanceStrategy: 'always'})),
-  //  provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withRouterConfig({ paramsInheritanceStrategy: 'always' })),
+    //  provideRouter(routes, withComponentInputBinding()),
   ]
 })
 export class AppRoutingModule { }

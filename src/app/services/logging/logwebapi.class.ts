@@ -6,36 +6,27 @@ import { catchError, tap } from 'rxjs/operators';
 import { LogEntry } from "./logentry.class";
 import { LogPublisher } from "./logpublisher.class";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { LogEntries } from './logentries.class';
 
 export class LogWebApi extends LogPublisher {
+
+    private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(private http: HttpClient) {
         // Must call `super()`from derived classes
         super();
 
         // Set location
-        this.location = "http://localhost:8080/api/log";
+        this.location = "http://localhost:8080/api/v1/logs";
     }
 
     // Add log entry to back end data store
     log(entry: LogEntry): Observable<LogEntryResult> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'application/json' }
-
         let logResult: LogEntryResult = new LogEntryResult();
         logResult.result = false;
 
-        /*
-        this.http.post<LogEntryResult>(this.location, entry, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'json' })
-            .pipe(
-                tap(LogEntryResult => console.log(JSON.stringify(LogEntryResult)),
-                    catchError(this.handleError('postChannelResult', LogEntryResult))),
-
-            );
-*/
-        return this.postLogEntry(entry);
-
-        //return of(logResult);
+        let logentries: LogEntries = new LogEntries(entry);
+        return this.postLogEntry(logentries);
     }
 
     // Clear all log entries from local storage
@@ -44,20 +35,22 @@ export class LogWebApi extends LogPublisher {
         return of(true);
     }
 
-    private postLogEntry(entry: LogEntry): Observable<LogEntryResult> {
+    private postLogEntry(entry: LogEntries): Observable<LogEntryResult> {
 
-        return this.http.post<LogEntryResult>(this.location, entry)
+        return this.http.post<LogEntryResult>(this.location, entry, { withCredentials: false, headers: this.headers })
             .pipe(
                 tap({
                     next: () => {
                         // 200
                     },
                     error: () => {
-                        console.log(JSON.stringify(LogEntryResult))
+                        console.log('postLogEntry: ' + JSON.stringify(LogEntryResult))
                     },
                 }),
                 catchError(
+
                     (error: HttpErrorResponse): Observable<any> => {
+                        console.log('postLogEntry catchError: ' + JSON.stringify(error));
                         // we expect 404, it's not a failure for us.
                         if (error.status === 404) {
                             return of(null); // or any other stream like of('') etc.
@@ -68,7 +61,6 @@ export class LogWebApi extends LogPublisher {
                     },
                 )
             );
- 
     }
 
     /**

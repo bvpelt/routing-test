@@ -8,10 +8,5 @@ import { LogService } from '../services/logging/log.service';
 })
 export class HomeComponent {
   constructor(private logger: LogService) {
-    logger.log("Started Homecomponent");
-    logger.debug("Started Homecomponent", "param 1", "param 2");
-    logger.error("Started Homecomponent", 1, ['a', 'b'],"string" );
-    logger.info("Started Homecomponent");
   }
-
 }

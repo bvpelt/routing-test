@@ -12,25 +12,31 @@ export class PermlinkComponent {
   location: string | null | undefined;
 
   constructor(private logger: LogService, private activeRoute: ActivatedRoute, private router: Router) {
-    logger.log('route data: ' + JSON.stringify(activeRoute.data));
-    logger.log('route firstChild: ' + JSON.stringify(activeRoute.firstChild));
-    logger.log('route fragment: ' + JSON.stringify(activeRoute.fragment));
-    logger.log('route outlet: ' + JSON.stringify(activeRoute.outlet));
-    logger.log('route paramMap: ' + JSON.stringify(activeRoute.paramMap));
-    logger.log('route queryParamMap: ' + JSON.stringify(activeRoute.queryParamMap));
+/*
+    this.logger.log('PermlinkComponent - route data: ' + JSON.stringify(activeRoute.data));
+    this.logger.log('PermlinkComponent - route firstChild: ' + JSON.stringify(activeRoute.firstChild));
+    this.logger.log('PermlinkComponent - route fragment: ' + JSON.stringify(activeRoute.fragment));
+    this.logger.log('PermlinkComponent - route outlet: ' + JSON.stringify(activeRoute.outlet));
+    */
+    this.logger.log('PermlinkComponent - route url: ' + JSON.stringify(activeRoute.url));
+    this.logger.log('PermlinkComponent - route paramMap: ' + JSON.stringify(activeRoute.paramMap));
+    this.logger.log('PermlinkComponent - route queryParamMap: ' + JSON.stringify(activeRoute.queryParamMap));
+
     let urlvalue: string = '';
     activeRoute.url.forEach((value: UrlSegment[]) => {
       urlvalue = urlvalue + '/' + value;
     })
-    logger.log('url: ' + urlvalue);
+
+    this.logger.log('PermlinkComponent - url: ' + urlvalue);
   }
 
   ngOnInit() {
     this.activeRoute.paramMap.subscribe(params => {
       this.location = params.get('location');
     });
+
     if (this.location) {
-      this.logger.log('redirect rout to: ', this.location);
+      this.logger.log('PermlinkComponent - redirect route to: ', this.location);
       this.gotoRoute(this.location);
     }
   }
