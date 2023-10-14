@@ -7,7 +7,11 @@ import { LogEntry } from "./logentry.class";
 import { LogPublisher } from "./logpublisher.class";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { LogEntries } from './logentries.class';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root'
+  })
 export class LogWebApi extends LogPublisher {
 
     private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -27,6 +31,10 @@ export class LogWebApi extends LogPublisher {
 
         let logentries: LogEntries = new LogEntries(entry);
         return this.postLogEntry(logentries);
+    }
+
+    get(): Observable<LogEntry[]> {
+        return this.getLogEntry();
     }
 
     // Clear all log entries from local storage
@@ -51,6 +59,33 @@ export class LogWebApi extends LogPublisher {
 
                     (error: HttpErrorResponse): Observable<any> => {
                         console.log('postLogEntry catchError: ' + JSON.stringify(error));
+                        // we expect 404, it's not a failure for us.
+                        if (error.status === 404) {
+                            return of(null); // or any other stream like of('') etc.
+                        }
+
+                        // other errors we don't know how to handle and throw them further.
+                        return throwError(() => error);
+                    },
+                )
+            );
+    }
+
+    private getLogEntry(): Observable<LogEntry[]> {
+        return this.http.get<LogEntry[]>(this.location, { withCredentials: false, headers: this.headers })
+            .pipe(
+                tap({
+                    next: () => {
+                        // 200
+                    },
+                    error: () => {
+                        console.log('getLogEntry: ' + JSON.stringify(LogEntry))
+                    },
+                }),
+                catchError(
+
+                    (error: HttpErrorResponse): Observable<any> => {
+                        console.log('getLogEntry catchError: ' + JSON.stringify(error));
                         // we expect 404, it's not a failure for us.
                         if (error.status === 404) {
                             return of(null); // or any other stream like of('') etc.

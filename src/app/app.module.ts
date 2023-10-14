@@ -13,6 +13,8 @@ import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
 import { LogService } from './services/logging/log.service';
 import { LogpublishersService } from './services/logging/logpublishers.service';
+import { LogdataComponent } from './logdata/logdata.component';
+import { LogWebApi } from './services/logging/logwebapi.class';
 
 
 
@@ -26,7 +28,8 @@ import { LogpublishersService } from './services/logging/logpublishers.service';
     SecondComponent,
     ChildaComponent,
     ChildbComponent,
-    PermlinkComponent
+    PermlinkComponent,
+    LogdataComponent
 
   ],
   imports: [
@@ -34,7 +37,7 @@ import { LogpublishersService } from './services/logging/logpublishers.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [LogService, LogpublishersService],
+  providers: [LogService, LogpublishersService, LogWebApi],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

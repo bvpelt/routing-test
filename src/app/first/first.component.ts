@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LogService } from '../services/logging/log.service';
 
@@ -7,7 +7,7 @@ import { LogService } from '../services/logging/log.service';
   templateUrl: './first.component.html',
   styleUrls: ['./first.component.css']
 })
-export class FirstComponent {
+export class FirstComponent implements OnInit {
   id: string | null | undefined;
 
   constructor(private logger: LogService, private route: ActivatedRoute) {
@@ -15,9 +15,12 @@ export class FirstComponent {
   }
 
   ngOnInit() {
+    /*
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
+*/
+    this.id = this.route.snapshot.queryParams['id'];
 
     if (this.id) {
       this.logger.log('FirstComponent - first with parameter: ' + this.id);

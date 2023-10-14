@@ -19,17 +19,9 @@ const routes: Routes = [
       { path: 'child-a', component: ChildaComponent },
       { path: 'child-b', component: ChildbComponent },
     ]
-  },
-  /*
+  },  
   { path: 'permlink/:location', component: PermlinkComponent },
   { path: 'permlink', component: PermlinkComponent },
-  */
-
-  {
-    path: 'permlink/:location', component: PermlinkComponent, children: [
-      { path: '**', component: PermlinkComponent },
-    ]
-  },
   { path: 'permlink', component: PermlinkComponent },
   { path: '**', component: NotfoundComponent },
 ];

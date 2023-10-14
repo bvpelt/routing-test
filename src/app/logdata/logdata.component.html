@@ -1,0 +1,7 @@
+<h1>Logentries</h1>
+
+<div *ngIf = "logentries.length > 0">
+    <ul *ngFor="let logentrie of logentries">
+        {{logentrie.entryDate}} {{logentrie.level}} {{logentrie.message}}
+    </ul>
+</div>
