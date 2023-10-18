@@ -1,0 +1,18 @@
+<h1>Logentries</h1>
+
+<div *ngIf="logentries.length > 0">
+    <ul *ngFor="let logentrie of logentries">
+        {{logentrie.entryDate}} {{logentrie.level}} {{logentrie.message}}
+    </ul>
+</div>
+<div>
+    <div *ngIf="page > 1" class="buttons">
+        <button (click)="prevpage()">Previous</button>
+    </div>
+    <div *ngIf="page > 1" class="buttons">
+        <button (click)="currentpage()">Current</button>
+    </div>
+    <div *ngIf="logentries.length === pageSize" class="buttons">
+        <button (click)="nextpage()">Next</button>
+    </div>
+</div>

@@ -5,7 +5,7 @@ import { Observable, of, throwError } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 import { LogEntry } from "./logentry.class";
 import { LogPublisher } from "./logpublisher.class";
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { LogEntries } from './logentries.class';
 import { Injectable } from '@angular/core';
 
@@ -35,6 +35,10 @@ export class LogWebApi extends LogPublisher {
 
     get(): Observable<LogEntry[]> {
         return this.getLogEntry();
+    }
+
+    getPage(pageNumber:number, pageSize: number): Observable<LogEntry[]> {
+        return this.getLogEntryPage(pageNumber, pageSize);
     }
 
     // Clear all log entries from local storage
@@ -72,7 +76,38 @@ export class LogWebApi extends LogPublisher {
     }
 
     private getLogEntry(): Observable<LogEntry[]> {
-        return this.http.get<LogEntry[]>(this.location, { withCredentials: false, headers: this.headers })
+        
+        return this.http.get<LogEntry[]>(this.location, { withCredentials: false, headers: this.headers})
+            .pipe(
+                tap({
+                    next: () => {
+                        // 200
+                    },
+                    error: () => {
+                        console.log('getLogEntry: ' + JSON.stringify(LogEntry))
+                    },
+                }),
+                catchError(
+
+                    (error: HttpErrorResponse): Observable<any> => {
+                        console.log('getLogEntry catchError: ' + JSON.stringify(error));
+                        // we expect 404, it's not a failure for us.
+                        if (error.status === 404) {
+                            return of(null); // or any other stream like of('') etc.
+                        }
+
+                        // other errors we don't know how to handle and throw them further.
+                        return throwError(() => error);
+                    },
+                )
+            );
+    }
+
+
+    private getLogEntryPage(pageNumber:number, pageSize: number): Observable<LogEntry[]> {
+        let params = new HttpParams().set('pageNumber',pageNumber).set('pageSize', pageSize);
+        let location = this.location + '/page';
+        return this.http.get<LogEntry[]>(location, { withCredentials: false, headers: this.headers, params: params})
             .pipe(
                 tap({
                     next: () => {

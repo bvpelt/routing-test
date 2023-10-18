@@ -15,6 +15,7 @@ import { LogService } from './services/logging/log.service';
 import { LogpublishersService } from './services/logging/logpublishers.service';
 import { LogdataComponent } from './logdata/logdata.component';
 import { LogWebApi } from './services/logging/logwebapi.class';
+import { LogdatapageComponent } from './logdatapage/logdatapage.component';
 
 
 
@@ -29,7 +30,8 @@ import { LogWebApi } from './services/logging/logwebapi.class';
     ChildaComponent,
     ChildbComponent,
     PermlinkComponent,
-    LogdataComponent
+    LogdataComponent,
+    LogdatapageComponent
 
   ],
   imports: [
