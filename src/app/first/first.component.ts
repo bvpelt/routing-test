@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LogService } from '../services/logging/log.service';
 
 @Component({
@@ -11,20 +11,29 @@ export class FirstComponent implements OnInit {
   id: string | null | undefined;
 
   constructor(private logger: LogService, private route: ActivatedRoute) {
-    this.logger.log('FirstComponent - first');
+    this.route.paramMap
+    .subscribe({
+      next: (params: ParamMap) => {
+        this.id = params.get('id');
+        this.logger.log('FirstComponent - end subscription first with parameter: ' + this.id);
+        this.logger.log('FirstComponent - first with parameter: ' + this.id);
+      },
+      error: (error) => {
+        this.logger.log('FirstComponent - error');
+      },
+      complete: () => {
+       
+      }
+    });
   }
 
   ngOnInit() {
-    /*
-    this.route.paramMap.subscribe(params => {
-      this.id = params.get('id');
-    });
-*/
-    this.id = this.route.snapshot.queryParams['id'];
 
-    if (this.id) {
-      this.logger.log('FirstComponent - first with parameter: ' + this.id);
-    } else {
+
+
+    //this.id = this.route.snapshot.queryParams['id'];
+
+    if (!this.id) {
       this.logger.log('FirstComponent - first without parameter');
     }
   }

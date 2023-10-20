@@ -16,9 +16,13 @@ In the example application the following deeplinks are available:
 | http://localhost:4200/first      | first page    |
 | http://localhost:4200/first/:id  | first page    |
 | http://localhost:4200/second     | second page   |
+| http://localhost:4200/permlink
 
 # References
-* Angular routing https://angular.io/guide/router
+* Angular routing 
+  * https://angular.io/guide/router
+  * https://angular.io/guide/observables-in-angular#router
 * Angular debugging with visual code https://code.visualstudio.com/docs/nodejs/angular-tutorial
 * Logging https://www.codemag.com/Article/1711021/Logging-in-Angular-Applications 
 * Observables https://angular.io/guide/rx-library 
+  

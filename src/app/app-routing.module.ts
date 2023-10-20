@@ -11,18 +11,23 @@ import { PermlinkComponent } from './permlink/permlink.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'first/:id', component: FirstComponent },
-  {
-    path: 'first', component: FirstComponent
-  },
+  { path: 'first', component: FirstComponent },
   {
     path: 'second', component: SecondComponent, children: [
       { path: 'child-a', component: ChildaComponent },
       { path: 'child-b', component: ChildbComponent },
     ]
-  },  
-  { path: 'permlink/:location', component: PermlinkComponent },
-  { path: 'permlink', component: PermlinkComponent },
-  { path: 'permlink', component: PermlinkComponent },
+  },
+  {
+    path: 'permlink/:location', component: PermlinkComponent, children: [
+      { path: '**', component: PermlinkComponent },
+    ]
+  },
+  {
+    path: 'permlink', component: PermlinkComponent, children: [
+      { path: '**', component: PermlinkComponent },
+    ]
+  },
   { path: '**', component: NotfoundComponent },
 ];
 
@@ -30,7 +35,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: [
-    provideRouter(routes, withComponentInputBinding(), withRouterConfig({ paramsInheritanceStrategy: 'always' })),
+    // provideRouter(routes, withComponentInputBinding(), withRouterConfig({ paramsInheritanceStrategy: 'always' })),
     //  provideRouter(routes, withComponentInputBinding()),
   ]
 })

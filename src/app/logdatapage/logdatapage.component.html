@@ -6,11 +6,11 @@
     </ul>
 </div>
 <div>
-    <div *ngIf="page > 1" class="buttons">
+    <div *ngIf="page > 0" class="buttons">
         <button (click)="prevpage()">Previous</button>
     </div>
-    <div *ngIf="page > 1" class="buttons">
-        <button (click)="currentpage()">Current</button>
+    <div *ngIf="page > 0" class="buttons">
+        <button (click)="currentpage()">Actueel</button>
     </div>
     <div *ngIf="logentries.length === pageSize" class="buttons">
         <button (click)="nextpage()">Next</button>

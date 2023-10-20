@@ -8,7 +8,7 @@ import { LogWebApi } from '../services/logging/logwebapi.class';
   styleUrls: ['./logdatapage.component.css']
 })
 export class LogdatapageComponent {
-  public page:number = 1;
+  public page: number = 0;
   public pageSize: number = 20;
 
   public logentries: LogEntry[] = [];
@@ -18,13 +18,7 @@ export class LogdatapageComponent {
   }
 
   ngOnInit() {
-
     this.getdata();
-    /*
-    this.log.getPage(this.page, this.pageSize).subscribe((result) => {
-      this.logentries = result;
-    })
-    */
   }
 
   nextpage() {
@@ -38,7 +32,7 @@ export class LogdatapageComponent {
   }
 
   currentpage() {
-    this.page = 1;
+    this.page = 0;
     this.getdata();
 
   }

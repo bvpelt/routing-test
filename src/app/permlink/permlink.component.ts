@@ -33,6 +33,7 @@ export class PermlinkComponent {
   ngOnInit() {
     this.activeRoute.paramMap.subscribe(params => {
       this.location = params.get('location');
+      this.logger.log('PermlinkComponent - received location: ', this.location);
     });
 
     if (this.location) {
