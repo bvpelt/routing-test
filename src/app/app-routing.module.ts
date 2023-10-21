@@ -7,6 +7,7 @@ import { SecondComponent } from './second/second.component';
 import { ChildaComponent } from './second/childa/childa.component';
 import { ChildbComponent } from './second/childb/childb.component';
 import { PermlinkComponent } from './permlink/permlink.component';
+import { ThirdComponent } from './third/third.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'child-b', component: ChildbComponent },
     ]
   },
+  { path: 'third', component: ThirdComponent },
   {
     path: 'permlink/:location', component: PermlinkComponent, children: [
       { path: '**', component: PermlinkComponent },

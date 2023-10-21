@@ -1,0 +1,31 @@
+<div id="app-third">
+    <h1>Third</h1>
+
+    <div id="coords">
+        <div>
+            x: {{clientx}}, y: {{clienty}}, timer: {{timerval}}
+        </div>
+        <div *ngIf="squares.length > 0">
+            <ul *ngFor="let square of squares; index as i" class="no-bullets">
+                <li>{{i}} - {{square}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <ul class="no-bullets">
+        <li><a routerLink="/first">First</a></li>
+        <ul class="no-bullets">
+            <li><a routerLink="/second/child-a">Child a</a></li>
+            <li><a routerLink="/second/child-b">Child b</a></li>
+        </ul>
+        <li><a routerLink="/second">Second</a></li>
+    </ul>
+
+    <button (click)="counter()">counter</button>
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+
+    <button [routerLink]="['']">Home page</button>
+</div>

@@ -2,7 +2,7 @@ import { LogEntryResult } from './logentryresult.class';
 
 //import { Http, Response, Headers, RequestOptions } from '@angular/common/http';
 import { Observable, of, throwError } from "rxjs";
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 import { LogEntry } from "./logentry.class";
 import { LogPublisher } from "./logpublisher.class";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 export class LogWebApi extends LogPublisher {
 
     private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -37,7 +37,7 @@ export class LogWebApi extends LogPublisher {
         return this.getLogEntry();
     }
 
-    getPage(pageNumber:number, pageSize: number): Observable<LogEntry[]> {
+    getPage(pageNumber: number, pageSize: number): Observable<LogEntry[]> {
         return this.getLogEntryPage(pageNumber, pageSize);
     }
 
@@ -76,8 +76,8 @@ export class LogWebApi extends LogPublisher {
     }
 
     private getLogEntry(): Observable<LogEntry[]> {
-        
-        return this.http.get<LogEntry[]>(this.location, { withCredentials: false, headers: this.headers})
+
+        return this.http.get<LogEntry[]>(this.location, { withCredentials: false, headers: this.headers })
             .pipe(
                 tap({
                     next: () => {
@@ -87,6 +87,7 @@ export class LogWebApi extends LogPublisher {
                         console.log('getLogEntry: ' + JSON.stringify(LogEntry))
                     },
                 }),
+                retry(3),
                 catchError(
 
                     (error: HttpErrorResponse): Observable<any> => {
@@ -104,10 +105,10 @@ export class LogWebApi extends LogPublisher {
     }
 
 
-    private getLogEntryPage(pageNumber:number, pageSize: number): Observable<LogEntry[]> {
-        let params = new HttpParams().set('pageNumber',pageNumber).set('pageSize', pageSize);
+    private getLogEntryPage(pageNumber: number, pageSize: number): Observable<LogEntry[]> {
+        let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
         let location = this.location + '/page';
-        return this.http.get<LogEntry[]>(location, { withCredentials: false, headers: this.headers, params: params})
+        return this.http.get<LogEntry[]>(location, { withCredentials: false, headers: this.headers, params: params })
             .pipe(
                 tap({
                     next: () => {
@@ -117,6 +118,7 @@ export class LogWebApi extends LogPublisher {
                         console.log('getLogEntry: ' + JSON.stringify(LogEntry))
                     },
                 }),
+                retry(3),
                 catchError(
 
                     (error: HttpErrorResponse): Observable<any> => {

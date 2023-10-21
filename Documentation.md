@@ -10,13 +10,26 @@ In order to be able to uses permanent deeplinks I want to be able:
 ## Definition of permanent deeplinks
 In the example application the following deeplinks are available:
 
-| url                              | description   |
-|----------------------------------|---------------|
-| http://localhost:4200/home       | home page     |
-| http://localhost:4200/first      | first page    |
-| http://localhost:4200/first/:id  | first page    |
-| http://localhost:4200/second     | second page   |
-| http://localhost:4200/permlink
+| url                              | description     |
+|----------------------------------|-----------------|
+| http://localhost:4200/home       | home page       |
+| http://localhost:4200/first      | first page      |
+| http://localhost:4200/first/:id  | first page      |
+| http://localhost:4200/second     | second page     |
+| http://localhost:4200/permlink   | permanent links |
+
+
+# Observables
+See https://angular.io/guide/rx-library
+
+| AREA	         | OPERATORS                                                     |
+|----------------|---------------------------------------------------------------|
+| Creation       | from, fromEvent, of                                           |
+| Combination    | combineLatest, concat, merge, startWith , withLatestFrom, zip |
+| Filtering	     | debounceTime, distinctUntilChanged, filter, take, takeUntil   |
+| Transformation | bufferTime, concatMap, map, mergeMap, scan, switchMap         |
+| Utility	       | tap                                                           |
+| Multicasting	 | share                                                         |  
 
 # References
 * Angular routing 
