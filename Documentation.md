@@ -38,4 +38,4 @@ See https://angular.io/guide/rx-library
 * Angular debugging with visual code https://code.visualstudio.com/docs/nodejs/angular-tutorial
 * Logging https://www.codemag.com/Article/1711021/Logging-in-Angular-Applications 
 * Observables https://angular.io/guide/rx-library 
-* Typescript https://typescript.helpful.codes/tutorials
+* Typescript https://typescript.helpful.codes/
